@@ -232,7 +232,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
             ✕
           </button>
           {/* Gemstone + Render Mode on top */}
-          <div className={`mt-3 mx-auto w-full ${isMobile ? 'max-w-full px-4' : 'max-w-[520px]'}`}>
+          <div className={`mt-3 mx-auto w-full ${isMobile ? 'max-w-full px-4' : 'max-w-[520px]'} md:ml-[80px]`}>
             {/* Top area: show Diamond Shape (when selected) or horizontal Gemstone row */}
             {activeTab === 'shape' ? (
               <div>
@@ -294,7 +294,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
           </div>
 
           <div className="mt-3 flex items-center justify-center">
-            <div className={`bg-white/80 backdrop-blur-md ${isMobile ? 'rounded-t-xl w-full px-4 py-3' : 'rounded-full px-3 py-1'} flex gap-2 shadow-sm justify-center`}>
+            <div className={`bg-white/80 backdrop-blur-md ${isMobile ? 'rounded-t-xl w-full px-4 py-3' : 'rounded-full px-3 py-1'} md:ml-[80px] flex gap-2 shadow-sm justify-center`}>
                 {[
                   { key: 'ring', label: 'Gem stone' },
                   { key: 'diamond', label: 'Diamond shape' },
