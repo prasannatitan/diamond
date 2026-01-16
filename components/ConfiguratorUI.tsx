@@ -294,7 +294,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
           </div>
 
           <div className="mt-3 flex items-center justify-center">
-            <div className={`bg-white/80 backdrop-blur-md ${isMobile ? 'rounded-t-xl w-full px-4 py-3' : 'rounded-full px-3 py-1'} flex gap-2 shadow-sm justify-center`}>
+            <div className={`bg-white/80 backdrop-blur-md ${isMobile ? 'rounded-t-xl w-full px-4 py-3' : 'rounded-full px-3 py-1'} md:ml-[80px] flex gap-2 shadow-sm justify-center`}>
                 {[
                   { key: 'ring', label: 'Gem stone' },
                   { key: 'diamond', label: 'Diamond shape' },
