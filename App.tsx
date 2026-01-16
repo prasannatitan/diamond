@@ -45,11 +45,21 @@ const App: React.FC = () => {
                 console.log('Customize click (mobile) -> opening');
                 setIsDrawerOpen(true);
               }}
-              className="hidden md:flex fixed bottom-6 md:bottom-[80px] md:mr-[-90px] right-8 z-60 px-6 py-3 bg-white text-black rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
+            className="md:hidden fixed top-4 left-4 z-60 px-5 py-2 bg-white text-black rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
           >
             Customize
           </button>
 
+          <button
+              onClick={() => {
+                console.log('Customize click (desktop) -> opening');
+                setIsDrawerOpen(true);
+              }}
+              className="hidden md:flex fixed bottom-6 md:bottom-[80px] md:mr-[-90px] right-8 z-60 px-6 py-3 bg-white text-black rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
+            style={{ right: 'calc(2rem + 360px)' }}
+          >
+            Customize
+          </button>
         </>
       )}
 
