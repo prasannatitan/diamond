@@ -232,7 +232,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
             ✕
           </button>
           {/* Gemstone + Render Mode on top */}
-          <div className={`mt-3 mx-auto w-full ${isMobile ? 'max-w-full px-4' : 'max-w-[520px]'} md:ml-[-200px]`}>
+          <div className={`mt-3 mx-auto w-full ${isMobile ? 'max-w-full px-4' : 'max-w-[520px]'} md:ml-[-50px]`}>
             {/* Top area: show Diamond Shape (when selected) or horizontal Gemstone row */}
             {activeTab === 'shape' ? (
               <div>
