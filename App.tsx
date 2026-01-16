@@ -50,17 +50,6 @@ const App: React.FC = () => {
             Customize
           </button>
 
-          <button
-              onClick={() => {
-                console.log('Customize click (desktop) -> opening');
-                setIsDrawerOpen(true);
-              }}
-              className="hidden md:flex fixed bottom-6 md:bottom-[100px] md:ml-[50px] md:mr-[-50px] right-8 z-60 px-6 py-3 bg-white text-black rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
-            
-            style={{ right: 'calc(2rem + 360px)' }}
-          >
-            Customize
-          </button>
         </>
       )}
 
