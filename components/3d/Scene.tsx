@@ -152,8 +152,8 @@ export const Scene: React.FC<SceneProps> = ({
               return {
                 ...base,
                 transform: 'translateX(50px) translateY(-50px)',
-                marginLeft: '300px',
-                marginTop: '90px',
+                marginLeft: '200px',
+                marginTop: '10px',
               };
             }
             return base;
