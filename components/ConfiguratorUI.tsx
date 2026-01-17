@@ -227,7 +227,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
               setIsOpen(false);
               if (onClose) onClose();
             }}
-            className="absolute top-2 right-2 z-60 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center text-xs md:top-3 md:right-[160px]"
+            className="absolute top-2 right-2 z-60 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center text-xs md:top-3 md:right-[180px]"
           >
             ✕
           </button>
