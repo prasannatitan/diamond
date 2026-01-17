@@ -101,10 +101,25 @@ export const Scene: React.FC<SceneProps> = ({
 
   const toggleFullscreen = async () => {
     try {
-      if (!document.fullscreenElement) {
-        await containerRef.current?.requestFullscreen?.();
+      const el: any = containerRef.current || document.documentElement;
+      const isFs = !!(document.fullscreenElement || (document as any).webkitFullscreenElement || (document as any).mozFullScreenElement);
+
+      if (!isFs) {
+        // standard
+        if (el.requestFullscreen) await el.requestFullscreen();
+        // webkit (older Safari)
+        else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
+        // moz (older Firefox)
+        else if (el.mozRequestFullScreen) await el.mozRequestFullScreen();
+        // ms (IE/Edge)
+        else if (el.msRequestFullscreen) await el.msRequestFullscreen();
+        else console.warn('Fullscreen not supported on this element');
       } else {
-        await document.exitFullscreen();
+        if (document.exitFullscreen) await document.exitFullscreen();
+        else if ((document as any).webkitExitFullscreen) await (document as any).webkitExitFullscreen();
+        else if ((document as any).mozCancelFullScreen) await (document as any).mozCancelFullScreen();
+        else if ((document as any).msExitFullscreen) await (document as any).msExitFullscreen();
+        else console.warn('Exit fullscreen not supported');
       }
     } catch (err) {
       console.error('Fullscreen toggle failed', err);
@@ -137,7 +152,7 @@ export const Scene: React.FC<SceneProps> = ({
               return {
                 ...base,
                 transform: 'translateX(50px) translateY(-50px)',
-                marginLeft: '150px',
+                marginLeft: '250px',
                 marginTop: '40px',
               };
             }
