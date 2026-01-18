@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { MetalType, GemType, SkinTone, RingModelType } from "../types/index";
 import { OptionGrid, OptionItemData } from "./Configurator/OptionGrid";
+import { Tooltip } from './ui/Tooltip';
 import { OptionItem } from "./Configurator/OptionItem";
 import {
   createMetalOptions,
@@ -201,7 +202,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
     }, [ringModel, ringConfig, diamondShape, setDiamondShape]);
 
     const renderModeOptions = useMemo<ReadonlyArray<OptionItemData<"performance" | "quality">>>(() => [
-      { value: "performance", label: "Performance", previewImage: "/assets/images/performance.png" },
+      { value: "performance", label: "Brilliance", previewImage: "/assets/images/performance.png" },
       { value: "quality", label: "Fire", previewImage: "/assets/images/fire.webp" },
     ], []);
 
@@ -275,17 +276,18 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
                 <div>
                   <div className="flex items-center justify-center gap-4">
                     {renderModeOptions.map((opt) => (
-                        <button
-                          key={opt.value}
-                          onClick={() => handleRenderModeSelect(opt.value as any)}
-                          className={`w-12 h-12 bg-white rounded-full border border-gray-100 flex items-center justify-center transition-shadow duration-200 ${renderMode === opt.value ? 'ring-2 ring-blue-500 shadow-[0_8px_30px_rgba(59,130,246,0.25)]' : 'shadow-sm'}`}
-                        >
-                          {opt.previewImage ? (
-                            <img src={opt.previewImage} alt={opt.label} className="w-9 h-9 object-contain rounded-full" draggable={false} />
-                          ) : (
-                            <span className="w-7 h-7 bg-gray-50 rounded-full" />
-                          )}
-                        </button>
+                        <Tooltip key={opt.value} content={opt.label}>
+                          <button
+                            onClick={() => handleRenderModeSelect(opt.value as any)}
+                            className={`w-12 h-12 bg-white rounded-full border border-gray-100 flex items-center justify-center transition-shadow duration-200 ${renderMode === opt.value ? 'ring-2 ring-blue-500 shadow-[0_8px_30px_rgba(59,130,246,0.25)]' : 'shadow-sm'}`}
+                          >
+                            {opt.previewImage ? (
+                              <img src={opt.previewImage} alt={opt.label} className="w-9 h-9 object-contain rounded-full" draggable={false} />
+                            ) : (
+                              <span className="w-7 h-7 bg-gray-50 rounded-full" />
+                            )}
+                          </button>
+                        </Tooltip>
                     ))}
                   </div>
                 </div>
