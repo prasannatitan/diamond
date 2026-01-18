@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useMemo, useState, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
+import { Tooltip } from '../ui/Tooltip';
 import { Environment, OrbitControls, ContactShadows } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
@@ -221,6 +222,7 @@ export const Scene: React.FC<SceneProps> = ({
 
       {/* Top-right quick action buttons (rotate / center / zoom in / zoom out) */}
       <div className="absolute top-4 right-4 z-30 flex flex-col gap-3">
+        <Tooltip content="Rotate">
         <button
           aria-label="Toggle auto-rotate"
           className={`w-10 h-10 rounded-full flex items-center justify-center shadow-lg ${
@@ -236,7 +238,9 @@ export const Scene: React.FC<SceneProps> = ({
             style={{ filter: 'invert(1) brightness(2)' }}
           />
         </button>
+          </Tooltip>
 
+        <Tooltip content="Fullscreen">
         <button
           aria-label="Fullscreen"
           className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center shadow-lg"
@@ -250,7 +254,9 @@ export const Scene: React.FC<SceneProps> = ({
             style={{ filter: 'invert(1) brightness(2)' }}
           />
         </button>
-
+          </Tooltip>
+        
+        <Tooltip content="Zoom in">
         <button
           aria-label="Zoom in"
           className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center shadow-lg"
@@ -260,7 +266,9 @@ export const Scene: React.FC<SceneProps> = ({
             <path d="M12 5v14M5 12h14" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
+        </Tooltip>
 
+        <Tooltip content="Zoom out">
         <button
           aria-label="Zoom out"
           className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center shadow-lg"
@@ -270,6 +278,7 @@ export const Scene: React.FC<SceneProps> = ({
             <path d="M5 12h14" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
+      </Tooltip>
       </div>
     </div>
   );
