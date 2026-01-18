@@ -16,6 +16,7 @@ export interface OptionItemProps<T extends string> {
     disabled?: boolean;
     useBlackBackground?: boolean;
     imageOnly?: boolean;
+    disableTooltip?: boolean;
 }
 
 const BUTTON_BASE_CLASSES = "relative group flex items-center justify-center w-full aspect-square rounded-xl transition-all duration-300 border";
@@ -25,9 +26,9 @@ const BUTTON_DISABLED_CLASSES = "bg-white/30 border-gray-200 opacity-40 cursor-n
 const BUTTON_BLACK_ACTIVE_CLASSES = "bg-white border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]";
 const BUTTON_BLACK_INACTIVE_CLASSES = "bg-white border-gray-200 hover:bg-white/90 hover:border-gray-300";
 const BUTTON_BLACK_DISABLED_CLASSES = "bg-white/30 border-gray-200 opacity-60 cursor-not-allowed";
-const IMAGE_BASE_CLASSES = "w-10 h-10 transition-transform duration-300";
-const IMAGE_ROUND_CLASSES = "w-12 h-12 rounded-full transition-transform duration-300";
-const IMAGE_ROUND_SMALL = "w-9 h-9 object-fill rounded-full transition-transform duration-300";
+const IMAGE_BASE_CLASSES = "w-10 h-10 object-contain transition-transform duration-300";
+const IMAGE_ROUND_CLASSES = "w-12 h-12 object-contain rounded-full transition-transform duration-300";
+const IMAGE_ROUND_SMALL = "w-9 h-9 object-contain rounded-full transition-transform duration-300";
 const BUTTON_IMAGE_BASE = "relative group flex items-center justify-center w-full aspect-square transition-all duration-300";
 const BUTTON_IMAGE_INACTIVE = "bg-transparent border-none p-0";
 const BUTTON_IMAGE_ACTIVE = "bg-transparent border-none p-0 rounded-full";
@@ -36,6 +37,10 @@ const ICON_BASE_CLASSES = "transition-transform duration-300";
 const CIRCLE_BASE_CLASSES = "w-8 h-8 rounded-full shadow-lg transition-transform duration-300";
 const SCALE_ACTIVE = "scale-110";
 const SCALE_HOVER = "group-hover:scale-105";
+
+const LABEL_BASE = "absolute left-1/2 -translate-x-1/2 z-50 px-2 py-1 text-xs rounded-full shadow-sm border pointer-events-none hidden group-hover:block group-focus:block";
+const LABEL_LIGHT = "text-gray-800 bg-white/90 border-gray-200";
+const LABEL_DARK = "text-white bg-gray-900/80 border-white/10";
 
 const TOGGLE_CONTAINER_CLASSES = "flex items-center justify-between cursor-pointer group w-full";
 const TOGGLE_LABEL_CLASSES = "text-white/70 text-sm";
@@ -53,6 +58,7 @@ export const OptionItem = memo(<T extends string>({
     disabled,
     useBlackBackground,
     imageOnly
+    , disableTooltip = false
 }: OptionItemProps<T>) => {
     if (type === 'toggle') {
         return (
@@ -89,17 +95,16 @@ export const OptionItem = memo(<T extends string>({
     }, [isActive, disabled, useBlackBackground, imageOnly]);
 
 
-    return (
-        <Tooltip content={label}>
-            <button
-                type="button"
-                aria-label={label}
-                aria-pressed={isActive}
-                onClick={disabled ? undefined : onClick}
-                disabled={disabled}
-                className={buttonClasses}
-            >
-                {previewImage ? (
+    const inner = (
+        <button
+            type="button"
+            aria-label={label}
+            aria-pressed={isActive}
+            onClick={disabled ? undefined : onClick}
+            disabled={disabled}
+            className={buttonClasses}
+        >
+            {previewImage ? (
                     imageOnly ? (
                         <img
                             src={previewImage}
@@ -123,7 +128,16 @@ export const OptionItem = memo(<T extends string>({
                 ) : (
                     <span style={{ color: isActive ? '#fff' : '#aaa', fontWeight: isActive ? 600 : 400, fontSize: 14 }}>{label}</span>
                 )}
-            </button>
+                {/* Hover/focus label */}
+                <span className={`${LABEL_BASE} ${useBlackBackground ? LABEL_DARK : LABEL_LIGHT}`}>{label}</span>
+        </button>
+    );
+
+    if (disableTooltip) return inner;
+
+    return (
+        <Tooltip content={label}>
+            {inner}
         </Tooltip>
     );
 }, (prevProps, nextProps) => {
