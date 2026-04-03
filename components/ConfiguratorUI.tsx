@@ -133,10 +133,10 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
     }, [isOpen, onOpen, onClose]);
 
     // computed wrapper classes/styles for responsive/mobile behavior
-    const wrapperStyle = isMobile ? {} : { marginLeft: '300px' };
+    const wrapperStyle = {};
     const wrapperClasses = isMobile
       ? `fixed left-0 right-0 bottom-0 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`
-      : `fixed left-1/2 bottom-6 transform -translate-x-1/2 z-50 transition-transform duration-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`;
+      : `fixed left-0 right-0 bottom-6 z-50 mx-auto w-full max-w-[420px] transition-transform duration-300 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`;
 
     useEffect(() => {
       if (typeof window === 'undefined') return;
@@ -228,12 +228,13 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
               setIsOpen(false);
               if (onClose) onClose();
             }}
-            className="absolute top-2 right-2 z-60 w-7 h-7 bg-white rounded-full shadow-md flex items-center justify-center text-xs md:top-3 md:right-[240px]"
+            className="absolute top-2 right-2 z-60 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center text-xs"
+            style={{ pointerEvents: 'auto' }}
           >
             ✕
           </button>
           {/* Gemstone + Render Mode on top */}
-          <div className={`mt-3 mx-auto w-full ${isMobile ? 'max-w-full px-4' : 'max-w-[520px]'} md:ml-[80px] md:mr-[300px]`}>
+          <div className={`mt-10 mx-auto w-full ${isMobile ? 'max-w-full px-4' : 'max-w-[520px]'} `}>
             {/* Top area: show Diamond Shape (when selected) or horizontal Gemstone row */}
             {activeTab === 'shape' ? (
               <div>
@@ -295,8 +296,8 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
             )}
           </div>
 
-          <div className="mt-3 flex items-center justify-center">
-            <div className={`bg-white/80 backdrop-blur-md ${isMobile ? 'rounded-t-xl w-full px-4 py-3' : 'rounded-full px-3 py-1'} md:ml-[80px] md:mr-[300px] flex gap-2 shadow-sm justify-center`}>
+          <div className="mt-3 flex justify-center">
+            <div className={`bg-white/80 backdrop-blur-md ${isMobile ? 'rounded-t-xl w-full px-4 py-3' : 'rounded-full px-3 py-1'} flex gap-2 shadow-sm justify-center`}>
                 {[
                   { key: 'ring', label: 'Gem stone' },
                   { key: 'diamond', label: 'Diamond shape' },

@@ -37,3 +37,22 @@
     scrollbar-width: none;
   }
 }
+
+/* ring-3d-model section */
+
+section
+{
+  max-width: 1330px;
+  margin: 0 auto;
+  padding: 0 76px;
+}
+@media (max-width: 1199px) {
+  section{
+    padding: 0 30px;
+  }
+}
+@media (max-width: 767px){
+  section{
+    padding: 0 15px;
+  }
+}

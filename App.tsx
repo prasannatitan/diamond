@@ -21,7 +21,9 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="relative w-full h-screen lux-bg overflow-hidden">
+   <>
+     <section>
+        <div className="relative w-full h-screen lux-bg overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Scene
           metal={metal}
@@ -55,8 +57,7 @@ const App: React.FC = () => {
                 console.log('Customize click (desktop) -> opening');
                 setIsDrawerOpen(true);
               }}
-              className="hidden md:flex fixed bottom-6 md:bottom-[80px] md:mr-[-90px] right-8 z-60 px-6 py-3 bg-white text-black rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
-            style={{ right: 'calc(2rem + 360px)' }}
+              className="hidden md:flex fixed bottom-6 md:bottom-[80px] left-1/2 transform -translate-x-1/2 z-60 px-6 py-3 bg-white text-black rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
           >
             Customize
           </button>
@@ -64,7 +65,7 @@ const App: React.FC = () => {
       )}
 
       <div
-        className={`fixed z-70 ${isDrawerOpen ? 'pointer-events-auto' : 'pointer-events-none'} w-full md:w-[420px] h-[24vh] md:h-[55vh] bottom-[3.5rem] md:bottom-0 left-0 md:left-1/2 md:transform md:-translate-x-1/2 transition-transform duration-300 ease-out `}
+        className={`fixed z-70 ${isDrawerOpen ? 'pointer-events-auto' : 'pointer-events-none'} w-full max-w-[420px] h-[24vh] md:h-[55vh] bottom-[3.5rem] md:bottom-0 left-0 right-0 mx-auto transition-transform duration-300 ease-out`}
       >
         <ConfiguratorUI
           metal={metal}
@@ -87,6 +88,8 @@ const App: React.FC = () => {
         />
       </div>
     </div>
+     </section>
+   </>
   );
 };
 
