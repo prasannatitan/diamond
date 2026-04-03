@@ -32,7 +32,7 @@ const MobileSpecs: React.FC<MobileSpecsProps> = ({ active, setActive, isConfigur
       </div>
 
       {active ? (
-        <div className="md:hidden fixed left-4 right-4 bottom-[5.5rem] z-50">
+        <div className="md:hidden fixed left-4 right-4 bottom-10 z-50">
           <Panel label={active} onClose={() => setActive(null)} />
         </div>
       ) : null}
@@ -99,13 +99,23 @@ const Panel: React.FC<{ label: string; onClose: () => void }> = ({ label, onClos
         mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
       }`}
     >
-      <div className={`bg-[rgba(238,238,242,0.8)] border border-[rgba(238,238,242,0.8)] ${desc?.image ? 'rounded-t-[32px]' : 'rounded-[32px]'} p-4 text-[#333333] relative`}>
-        <p className="text-[14px] leading-relaxed"><strong>{desc?.title || label}: </strong>{desc?.text || ''}</p>
+      <div className={`bg-[rgba(238,238,242,0.8)] border border-[rgba(238,238,242,0.8)] ${desc?.image ? "rounded-t-[32px]":"rounded-[32px]"}  ${mounted ?   "rounded-t-[32px]":""} p-4 text-[#333333] relative`}>
+        <button
+          aria-label="Close spec"
+          onClick={onClose}
+          className="md:hidden absolute right-3 top-3 w-7 h-7 rounded-full bg-white flex items-center justify-center text-sm shadow-sm"
+        >
+          ✕
+        </button>
+        
+
+       
+        <p className="text-[14px] leading-relaxed max-md:pr-6"> <strong className="">{desc?.title || label}: </strong>{desc?.text || ''}</p>
       </div>
 
       {desc?.image ? (
-        <div style={{ backgroundColor: 'white' }} className="shadow-[0_0_0_0.25px_#3C3C3C] rounded-b-[32px] overflow-hidden h-[150px] w-full bg-transparent">
-          <img src={desc.image} alt={`${desc?.title} diagram`} className="block w-full h-auto max-h-full object-contain" />
+        <div style={{}} className="shadow-[0_0_0_0.25px_#3C3C3C] rounded-b-[32px] overflow-hidden shadow-[0_0_0_0.25px_#3C3C3C]  flex items-center justify-center bg-transparent">
+          <img src={desc.image} alt={`${desc?.title} diagram`} className="block max-h-full object-contain" />
         </div>
       ) : null}
     </div>
@@ -117,23 +127,28 @@ export const DiamondSpecs: React.FC<{ isConfiguratorOpen?: boolean }> = ({ isCon
 
   return (
     <>
-      <div className="hidden md:flex fixed top-1/2 left-4 transform -translate-y-1/2 z-20">
-        <div className="relative flex items-start gap-3">
+      <div className="hidden md:flex fixed left-8 top-1/2 transform -translate-y-1/2 z-20">
+        <div className="relative">
           <div className="select-none" onMouseDown={(e) => e.preventDefault()}>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 ml-[96px]">
               {ITEMS_SIMPLE.map((label) => {
-                const isActive = active === label;
+                if (active === label) {
+                  return <Panel key={`${label}-panel-root`} label={label} onClose={() => setActive(null)} />;
+                }
+
                 return (
                   <button
                     key={label}
-                    onClick={() => setActive(isActive ? null : label)}
-                    className={`flex items-center gap-3 bg-[#f3f4f6] text-[#333333] px-4 py-2 rounded-full shadow-sm transition-transform ${
-                      isActive ? 'ring-2 ring-indigo-400 scale-[1.02]' : 'hover:scale-[1.02]'
-                    }`}
+                    onClick={() => setActive(active === label ? null : label)}
+                    className={`flex items-center gap-3 bg-[#f3f4f6] text-[#333333] px-4 py-2 rounded-full shadow-sm  transition-transform ${active ? "md:max-w-[199px]" : ""}`}
                     draggable={false}
                   >
                     <span className="w-[20px] h-[20px] flex items-center justify-center bg-white border border-[#3C3C3C] rounded-full text-sm text-[#333333]" draggable={false}>
-                      {isActive ? '-' : '+'}
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="1" y1="5" x2="9" y2="5" stroke="#3C3C3C" stroke-width="2" stroke-linecap="round"/>
+<line x1="5" y1="1" x2="5" y2="9" stroke="#3C3C3C" stroke-width="2" stroke-linecap="round"/>
+</svg>
+
                     </span>
                     <span className="text-sm font-medium text-[#3C3C3C]" draggable={false}>
                       {label}
@@ -143,12 +158,6 @@ export const DiamondSpecs: React.FC<{ isConfiguratorOpen?: boolean }> = ({ isCon
               })}
             </div>
           </div>
-
-          {active && (
-            <div className="relative w-full max-w-[420px]">
-              <Panel label={active} onClose={() => setActive(null)} />
-            </div>
-          )}
         </div>
       </div>
 
