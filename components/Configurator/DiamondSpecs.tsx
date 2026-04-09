@@ -99,7 +99,7 @@ const Panel: React.FC<{ label: string; onClose: () => void }> = ({ label, onClos
         mounted ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
       }`}
     >
-      <div className={`bg-[rgba(238,238,242,0.8)] border border-[rgba(238,238,242,0.8)] ${desc?.image ? "rounded-t-[32px]":"rounded-[32px]"}  ${mounted ?   "rounded-t-[32px]":""} p-4 text-[#333333] relative`}>
+      <div className={`bg-[#eeeef2] border border-[#d9d9de] ${desc?.image ? "rounded-t-[32px]":"rounded-[32px]"}  ${mounted ?   "rounded-t-[32px]":""} p-4 text-[#333333] relative`}>
         <button
           aria-label="Close spec"
           onClick={onClose}

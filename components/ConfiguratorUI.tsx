@@ -208,7 +208,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
 
     const ringModelOptions = useMemo(() => createRingModelOptions(), []);
 
-    const [activeTab, setActiveTab] = useState<'gem' | 'shape' | 'ring' | 'render'>('gem');
+    const [activeTab, setActiveTab] = useState<'gem' | 'shape' | 'ring' | 'render'>('ring');
 
     const handleMetalSelect = useCallback((value: MetalType | boolean) => { if (typeof value !== 'boolean') setMetal(value); }, [setMetal]);
     const handleGemSelect = useCallback((value: GemType | boolean) => { if (typeof value !== 'boolean') setGem(value); }, [setGem]);
@@ -299,9 +299,9 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
           <div className="mt-3 flex justify-center">
             <div className={`bg-white/80 backdrop-blur-md ${isMobile ? 'rounded-t-xl w-full px-4 py-3' : 'rounded-full px-3 py-1'} flex gap-2 shadow-sm justify-center`}>
                 {[
-                  { key: 'ring', label: 'Gem stone' },
-                  { key: 'diamond', label: 'Diamond shape' },
-                  { key: 'render', label: 'Render' },
+                  { key: 'ring', label: 'Diamond Color' },
+                  { key: 'diamond', label: 'Diamond Shape' },
+                  { key: 'render', label: 'Light Performance' },
                 ].map((t) => (
                   <button
                     key={t.key}
@@ -310,7 +310,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
                       else if (t.key === 'ring') setActiveTab('ring');
                       else if (t.key === 'render') setActiveTab('render');
                     }}
-                    className={`px-6 py-2  md:min-w-[145px] min-w-[95px] text-center whitespace-normal leading-tight rounded-full text-sm font-medium ${((t.key === 'diamond' && activeTab === 'shape') || (t.key === 'ring' && activeTab === 'ring') || (t.key === 'render' && activeTab === 'render')) ? 'bg-white text-black' : 'text-gray-600'}`}
+                    className={`px-6 py-2  md:min-w-[145px] min-w-[95px] text-center whitespace-nowrap leading-tight rounded-full text-sm font-medium ${((t.key === 'diamond' && activeTab === 'shape') || (t.key === 'ring' && activeTab === 'ring') || (t.key === 'render' && activeTab === 'render')) ? 'bg-white text-black' : 'text-gray-600'}`}
                   >
                     {t.label}
                   </button>

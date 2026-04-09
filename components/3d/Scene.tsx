@@ -35,7 +35,6 @@ export const Scene: React.FC<SceneProps> = ({
   const [isModelReady, setIsModelReady] = useState(false);
   const [dpr, setDpr] = useState<number>(1);
   const [isMobile, setIsMobile] = useState<boolean>(false);
-  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [isUserInteracting, setIsUserInteracting] = useState(false);
   const [isHoveringModel, setIsHoveringModel] = useState(false);
 
@@ -118,62 +117,6 @@ export const Scene: React.FC<SceneProps> = ({
     }
   };
 
-  useEffect(() => {
-    const onFullScreenChange = () => {
-      const isFs = !!(
-        document.fullscreenElement ||
-        (document as any).webkitFullscreenElement ||
-        (document as any).mozFullScreenElement ||
-        (document as any).msFullscreenElement
-      );
-      setIsFullscreen(isFs);
-    };
-
-    document.addEventListener("fullscreenchange", onFullScreenChange);
-    document.addEventListener("webkitfullscreenchange", onFullScreenChange);
-    document.addEventListener("mozfullscreenchange", onFullScreenChange);
-    document.addEventListener("MSFullscreenChange", onFullScreenChange);
-
-    return () => {
-      document.removeEventListener("fullscreenchange", onFullScreenChange);
-      document.removeEventListener("webkitfullscreenchange", onFullScreenChange);
-      document.removeEventListener("mozfullscreenchange", onFullScreenChange);
-      document.removeEventListener("MSFullscreenChange", onFullScreenChange);
-    };
-  }, []);
-
-  const toggleFullscreen = async () => {
-    try {
-      const el: any = containerRef.current || document.documentElement;
-      const isFs = !!(
-        document.fullscreenElement ||
-        (document as any).webkitFullscreenElement ||
-        (document as any).mozFullScreenElement ||
-        (document as any).msFullscreenElement
-      );
-
-      if (!isFs) {
-        if (el.requestFullscreen) await el.requestFullscreen();
-        else if (el.webkitRequestFullscreen) await el.webkitRequestFullscreen();
-        else if (el.mozRequestFullScreen) await el.mozRequestFullScreen();
-        else if (el.msRequestFullscreen) await el.msRequestFullscreen();
-        else console.warn("Fullscreen not supported on this element");
-      } else {
-        if (document.exitFullscreen) await document.exitFullscreen();
-        else if ((document as any).webkitExitFullscreen) {
-          await (document as any).webkitExitFullscreen();
-        } else if ((document as any).mozCancelFullScreen) {
-          await (document as any).mozCancelFullScreen();
-        } else if ((document as any).msExitFullscreen) {
-          await (document as any).msExitFullscreen();
-        } else {
-          console.warn("Exit fullscreen not supported");
-        }
-      }
-    } catch (err) {
-      console.error("Fullscreen toggle failed", err);
-    }
-  };
 
   const handleModelPointerEnter = (e: any) => {
     e.stopPropagation();
@@ -193,9 +136,7 @@ export const Scene: React.FC<SceneProps> = ({
   };
 
   return (
-    <div
-      ref={containerRef}
-      className={`relative w-full h-full select-none ${isFullscreen ? "bg-white" : "bg-transparent"}`}>
+    <div ref={containerRef} className="relative w-full h-full select-none">
       <Canvas
         shadows
         dpr={dpr}
@@ -210,20 +151,12 @@ export const Scene: React.FC<SceneProps> = ({
         className="w-full h-full select-none"
         onPointerMissed={() => setIsHoveringModel(false)}
         style={(() => {
-          const canvasBase: React.CSSProperties = {
-            backgroundColor: isFullscreen
-              ? isMobile
-                ? "#000"
-                : "#fff"
-              : "transparent",
-          };
-
           const base: React.CSSProperties = {
             opacity: isModelReady ? 1 : 0,
             transition: "opacity 0.5s ease-in-out",
           };
 
-          if (!isMobile && !isFullscreen) {
+          if (!isMobile) {
             return {
               ...base,
               transform: "translateX(50px) translateY(-50px)",
@@ -232,10 +165,7 @@ export const Scene: React.FC<SceneProps> = ({
             };
           }
 
-          return {
-            ...base,
-            ...canvasBase,
-          };
+          return base;
         })()}
       >
         <Suspense fallback={null}>
@@ -309,39 +239,6 @@ export const Scene: React.FC<SceneProps> = ({
       </Canvas>
 
       <div className="absolute top-4 z-30 right-4 flex flex-col gap-3">
-        <Tooltip content="Rotate">
-          <button
-            aria-label="Rotation always on"
-            className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg bg-blue-600 text-white"
-            type="button"
-          >
-            <img
-              src="/assets/images/rotate.png"
-              alt="rotate"
-              className="w-7 h-7 object-contain"
-              draggable={false}
-              style={{ filter: "invert(1) brightness(2)" }}
-            />
-          </button>
-        </Tooltip>
-
-        <Tooltip content="Fullscreen">
-          <button
-            aria-label="Fullscreen"
-            className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center shadow-lg"
-            onClick={toggleFullscreen}
-            type="button"
-          >
-            <img
-              src="/assets/images/fullscreen.png"
-              alt="fullscreen"
-              className="w-4 h-4 object-contain"
-              draggable={false}
-              style={{ filter: "invert(1) brightness(2)" }}
-            />
-          </button>
-        </Tooltip>
-
         <Tooltip content="Zoom in">
           <button
             aria-label="Zoom in"
