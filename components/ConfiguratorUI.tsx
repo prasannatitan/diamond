@@ -311,6 +311,7 @@ export const ConfiguratorUI: React.FC<ConfiguratorUIProps> = React.memo(
                       else if (t.key === 'render') setActiveTab('render');
                     }}
                     className={`px-6 py-2  md:min-w-[145px] min-w-[95px] text-center whitespace-nowrap leading-tight rounded-full text-sm font-medium ${((t.key === 'diamond' && activeTab === 'shape') || (t.key === 'ring' && activeTab === 'ring') || (t.key === 'render' && activeTab === 'render')) ? 'bg-white text-black' : 'text-gray-600'}`}
+                  style={{textWrap:"auto"}}
                   >
                     {t.label}
                   </button>
