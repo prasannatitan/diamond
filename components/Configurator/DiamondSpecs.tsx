@@ -11,7 +11,7 @@ const MobileSpecs: React.FC<MobileSpecsProps> = ({ active, setActive, isConfigur
 
   return (
     <>
-      <div className="md:hidden fixed bottom-10 left-0 w-full z-40">
+      <div className="md:hidden fixed bottom-0 left-0 w-full z-40">
         <div className="overflow-x-auto px-4 py-2">
           <div className="flex gap-3 items-center w-max snap-x snap-mandatory">
             {ITEMS_SIMPLE.map((label) => (
