@@ -19,6 +19,13 @@ const App: React.FC = () => {
   const [renderMode, setRenderMode] = useState<"performance" | "quality">(
     "quality"
   );
+  const [isMobileTouchInteractionEnabled, setIsMobileTouchInteractionEnabled] =
+    useState<boolean>(false);
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+    setIsMobileTouchInteractionEnabled(false);
+  };
 
   return (
    <>
@@ -35,6 +42,7 @@ const App: React.FC = () => {
           // removed tryHandOn prop
           skinTone={skinTone}
           renderMode={renderMode}
+          isMobileTouchInteractionEnabled={isMobileTouchInteractionEnabled}
         />
       </div>
 
@@ -45,6 +53,7 @@ const App: React.FC = () => {
           <button
               onClick={() => {
                 console.log('Customize click (mobile) -> opening');
+                setIsMobileTouchInteractionEnabled(true);
                 setIsDrawerOpen(true);
               }}
             className="md:hidden fixed top-4 left-4 z-60 px-5 py-2 bg-black text-white rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
@@ -82,7 +91,7 @@ const App: React.FC = () => {
           setSkinTone={setSkinTone}
           renderMode={renderMode}
           setRenderMode={setRenderMode}
-          onClose={() => setIsDrawerOpen(false)}
+          onClose={handleCloseDrawer}
           onOpen={() => setIsDrawerOpen(true)}
           externalOpen={isDrawerOpen}
         />

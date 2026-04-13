@@ -8,6 +8,7 @@ import { MetalType, GemType, SkinTone, RingModelType } from "../../types";
 import { RingModel } from "./RingModel";
 import { HandModel } from "./HandModel";
 import * as THREE from "three";
+import { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 interface SceneProps {
   metal: MetalType;
@@ -17,6 +18,7 @@ interface SceneProps {
   autoRotate: boolean;
   skinTone: SkinTone;
   renderMode: "performance" | "quality";
+  isMobileTouchInteractionEnabled?: boolean;
   onToggleAutoRotate?: () => void;
 }
 
@@ -30,6 +32,7 @@ export const Scene: React.FC<SceneProps> = ({
   autoRotate,
   skinTone,
   renderMode,
+  isMobileTouchInteractionEnabled = false,
   onToggleAutoRotate,
 }) => {
   const [isModelReady, setIsModelReady] = useState(false);
@@ -48,6 +51,23 @@ export const Scene: React.FC<SceneProps> = ({
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const controlsRef = useRef<any>(null);
+  const isTouchInteractionEnabled = !isMobile || isMobileTouchInteractionEnabled;
+
+  useEffect(() => {
+    const controls = controlsRef.current as OrbitControlsImpl | null;
+    if (!controls) return;
+
+    if (isTouchInteractionEnabled) {
+      controls.enableRotate = true;
+      controls.enableZoom = true;
+      controls.enablePan = false;
+      return;
+    }
+
+    controls.enableRotate = false;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+  }, [isTouchInteractionEnabled]);
 
   useEffect(() => {
     const deviceDpr =
@@ -154,6 +174,7 @@ export const Scene: React.FC<SceneProps> = ({
           const base: React.CSSProperties = {
             opacity: isModelReady ? 1 : 0,
             transition: "opacity 0.5s ease-in-out",
+            touchAction: isTouchInteractionEnabled ? "none" : "pan-y",
           };
 
           if (!isMobile) {
@@ -216,6 +237,8 @@ export const Scene: React.FC<SceneProps> = ({
           <OrbitControls
             ref={controlsRef}
             enablePan={false}
+            enableRotate={isTouchInteractionEnabled}
+            enableZoom={isTouchInteractionEnabled}
             minPolarAngle={0}
             maxPolarAngle={Math.PI / 1.8}
             minDistance={renderMode === "performance" ? 2.5 : 2.2}
