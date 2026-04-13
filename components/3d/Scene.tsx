@@ -174,7 +174,9 @@ export const Scene: React.FC<SceneProps> = ({
           const base: React.CSSProperties = {
             opacity: isModelReady ? 1 : 0,
             transition: "opacity 0.5s ease-in-out",
-            touchAction: isMobile ? "pan-y" : "none",
+            touchAction: isTouchInteractionEnabled ? "none" : "pan-y",
+            pointerEvents:
+              isMobile && !isTouchInteractionEnabled ? "none" : "auto",
           };
 
           if (!isMobile) {
