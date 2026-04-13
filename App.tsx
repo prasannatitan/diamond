@@ -56,7 +56,7 @@ const App: React.FC = () => {
                 setIsMobileTouchInteractionEnabled(true);
                 setIsDrawerOpen(true);
               }}
-            className="md:hidden fixed top-4 left-4 z-60 px-5 py-2 bg-black text-white rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
+            className="md:hidden fixed top-4 left-4 z-60 px-5 py-2 bg-[#3C3C3C] text-white rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
           >
             Interact
           </button>
@@ -66,7 +66,7 @@ const App: React.FC = () => {
                 console.log('Customize click (desktop) -> opening');
                 setIsDrawerOpen(true);
               }}
-              className="hidden md:flex fixed bottom-6 md:bottom-[80px] left-1/2 transform -translate-x-1/2 z-60 px-6 py-3 bg-black text-white rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
+              className="hidden md:flex fixed bottom-6 md:bottom-[80px] left-1/2 transform -translate-x-1/2 z-60 px-6 py-3 bg-[#3C3C3C] text-white rounded-full shadow-md hover:shadow-lg transition-shadow font-semibold"
           >
             Interact
           </button>
